@@ -9,4 +9,12 @@ public class Griewank {
         }
         return (sum-sum2);
     }
+
+    public double evaluacion2(double [] solucion,int dimension,int m){
+        double sum=0.0;
+        for (int i = 0; i < dimension; i++) {
+            sum+= ((Math.sin(solucion[i]))*Math.pow(Math.sin(i*Math.pow(i*solucion[i],2)/Math.PI),2*m));
+        }
+        return -sum;
+    }
 }

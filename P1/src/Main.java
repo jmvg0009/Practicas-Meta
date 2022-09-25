@@ -4,5 +4,6 @@ public class Main {
         int dimension= config.getDimension();
         int rango_inferior= config.getRango_inferior();
         int rango_superior= config.getRango_superior();
+
     }
 }

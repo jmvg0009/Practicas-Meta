@@ -28,7 +28,6 @@ public class Evaluacion {
         }
         return sum1;
     }
-
     public double rastringin(double [] solucion,int dimension){
         double sum=0.0;
         double sol=0.0;
@@ -38,5 +37,77 @@ public class Evaluacion {
         sol= 10*dimension + sum;
         return sol;
     }
+    public double trid(double [] solucion,int dimension){
+        double sum=0.0;
+        double sum1=0.0;
+        double sol=0.0;
+        for (int i = 0; i < dimension; i++) {
+            sum+= Math.pow(solucion[i] -1 ,2);
+            sum1 += solucion[i]*solucion[i-1];
 
+        }
+        sol=sum - sum1;
+        return sol;
+    }
+    public double rotatedHH(double[] solucion, int dimension) {
+        double sum1 = 0.0;
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < solucion.length; j++) {
+                sum1 += Math.pow(solucion[j], 2);
+            }
+        }
+        return sum1;
+    }
+    public double rosenbrock(double[] solucion, int dimension) {
+        double sum = 0.0;
+        double sol = 0.0;
+        for (int i = 0; i < dimension - 1; i++) {
+            sum += (100 * Math.pow((solucion[i + 1] - (Math.pow(solucion[i], 2))), 2) + Math.pow((solucion[i] - 1), 2));
+        }
+        sol = sum;
+        return sol;
+    }
+    public double dixon(double[] solucion, int dimension) {
+        double sum = 0.0;
+        double sol = 0.0;
+        for (int i = 0; i < dimension; i++) {
+            sum += i * Math.pow((Math.pow(2*solucion[i],2)-solucion[i-1]),2);
+        }
+        sol = Math.pow((solucion[1] - 1),2) + sum ;
+        return sol;
+    }
+    public double rotatedHE(double [] solucion,int dimension){
+        double sum1=0.0;
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < solucion.length; j++) {
+                sum1+= Math.pow(solucion[j],2);
+            }
+        }
+        return sum1;
+    }
+    public double schewefel(double [] solucion,int dimension){
+        double sum=0.0;
+        double sol=0.0;
+        for (int i = 0; i < dimension; i++) {
+            sum+=(solucion[i]*Math.sin(Math.sqrt(Math.abs(solucion[i]))));
+        }
+        sol=418.9829*dimension-sum;
+        return sol;
+    }
+    public double michalewicz(double [] solucion,int dimension,int m){
+        double sum=0.0;
+        for (int i = 0; i < dimension; i++) {
+            sum+= ((Math.sin(solucion[i]))*Math.pow(Math.sin(i*Math.pow(i*solucion[i],2)/Math.PI),2*m));
+        }
+        return -sum;
+    }
+    public double griewank(double [] solucion,int dimension){
+        double sum=0.0;
+        double sum2=1.0;
+        for (int i = 0; i < dimension; i++) {
+            sum+= (Math.pow(solucion[i],2))/4000;
+            sum2*= (Math.cos((solucion[i])/Math.sqrt(i)))+1;
+        }
+        return (sum-sum2);
+    }
 }

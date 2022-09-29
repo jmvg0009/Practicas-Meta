@@ -7,13 +7,14 @@ public class BusquedaLocal {
         rand.Set_random(semilla);
     }
 
-    void busquedalocal(int iteracion,float probabilidad,float porcentajeAleatorio,int k,double[] solucion,int dimension,int valorMin,int valorMax,String funcion){
+    void busquedalocal(int iteracion,double probabilidad,float porcentajeAleatorio,int k,int dimension,int valorMin,int valorMax,String funcion){
         double [] mejorSolucion = new double[dimension];
         double mejorCoste=0.0;
         int it=0;
         double [][] vecinos = new double[k][dimension];
         boolean mejora = true;
         Evaluacion eva=new Evaluacion();
+        double[] solucion=new double[dimension];
         mejorSolucion=solucionInicialAleatoria(solucion,dimension,valorMin,valorMax);
         mejorCoste=eva.ackley(mejorSolucion);
 
@@ -30,9 +31,24 @@ public class BusquedaLocal {
                     }
                 }
             }
+            int nuevomej;
+            nuevomej=nuevoMejor(vecinos,mejorSolucion,mejorCoste,k);
+           // mejorSolucion=nuevoMejor(vecinos,mejorSolucion,mejorCoste,k,mejora);
+//            double compruebaMejora=eva.ackley(mejorSolucion);
+//            if(compruebaMejora==mejorCoste){
+//                mejora=false;
+//            }
+            if(nuevomej==-1){
+                mejora=false;
+            }else {
+                mejorSolucion=vecinos[nuevomej];
+            }
+            it++;
+        }
 
-            mejorSolucion=nuevoMejor(vecinos);
-
+        System.out.println("El mejor coste es " + mejorCoste);
+        for (int i = 0; i < dimension; i++) {
+            System.out.println(mejorSolucion[i]);
         }
 
     }
@@ -45,8 +61,18 @@ public class BusquedaLocal {
         return sol;
     }
 
-    double [] nuevoMejor (double [][] vecinos){
-        return null;
+    int nuevoMejor (double [][] vecinos,double[] mejorSolucion,double mejorCoste,int k){
+        Evaluacion eva=new Evaluacion();
+        int posicion=-1;
+        for (int i = 0; i <k ; i++) {
+            double aux = 9999999999999999999999999999999.0;
+            aux = eva.ackley(vecinos[i]);
+            if (aux < mejorCoste) {
+                //mejorSolucion = vecinos[i];
+                posicion=i;
+            }
+        }
+        return posicion;
     }
 
 }

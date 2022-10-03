@@ -11,14 +11,16 @@ public class BusquedaLocal {
         double [] mejorSolucion = new double[dimension];
         double mejorCoste=0.0;
         int it=0;
-        double [][] vecinos = new double[k][dimension];
         boolean mejora = true;
-        Evaluacion eva=new Evaluacion();
         double[] solucion=new double[dimension];
         mejorSolucion=solucionInicialAleatoria(solucion,dimension,valorMin,valorMax);
-        mejorCoste=eva.ackley(mejorSolucion);
+        mejorCoste=evaluacion(mejorSolucion,funcion);
 
         while(it<iteracion && mejora){
+            if(k==-1){
+                k= rand.Randint(4,10);
+            }
+            double [][] vecinos = new double[k][dimension];
             for(int i =0;i<k;i++){
                 for (int j = 0; j < dimension; j++) {
                     double muta = rand.Randfloat(0,1);
@@ -32,7 +34,7 @@ public class BusquedaLocal {
                 }
             }
             int nuevomej;
-            nuevomej=nuevoMejor(vecinos,mejorSolucion,mejorCoste,k);
+            nuevomej=nuevoMejor(vecinos,mejorSolucion,mejorCoste,k,funcion);
            // mejorSolucion=nuevoMejor(vecinos,mejorSolucion,mejorCoste,k,mejora);
 //            double compruebaMejora=eva.ackley(mejorSolucion);
 //            if(compruebaMejora==mejorCoste){
@@ -42,6 +44,7 @@ public class BusquedaLocal {
                 mejora=false;
             }else {
                 mejorSolucion=vecinos[nuevomej];
+                mejorCoste=evaluacion(mejorSolucion,funcion);
             }
             it++;
         }
@@ -50,7 +53,7 @@ public class BusquedaLocal {
         for (int i = 0; i < dimension; i++) {
             System.out.println(mejorSolucion[i]);
         }
-
+        System.out.println("La iteracion es " + it);
     }
 
     double[] solucionInicialAleatoria(double [] sol,int dimension,int valorMin,int valorMax){
@@ -61,18 +64,61 @@ public class BusquedaLocal {
         return sol;
     }
 
-    int nuevoMejor (double [][] vecinos,double[] mejorSolucion,double mejorCoste,int k){
-        Evaluacion eva=new Evaluacion();
+    int nuevoMejor (double [][] vecinos,double[] mejorSolucion,double mejorCoste,int k,String funcion){
         int posicion=-1;
         for (int i = 0; i <k ; i++) {
             double aux = 9999999999999999999999999999999.0;
-            aux = eva.ackley(vecinos[i]);
+            aux = evaluacion(vecinos[i],funcion);
             if (aux < mejorCoste) {
-                //mejorSolucion = vecinos[i];
                 posicion=i;
+                mejorCoste=aux;
             }
         }
         return posicion;
+    }
+
+    double evaluacion(double[] solucion,String funcion){
+
+        double coste=0.0;
+        Evaluacion eva=new Evaluacion();
+
+        switch (funcion){
+            case "ackley":
+                coste=eva.ackley(solucion);
+                break;
+            case "perm":
+                coste=eva.perm(solucion,1);
+                break;
+            case "rastringin":
+                coste=eva.rastringin(solucion);
+                break;
+            case "trid":
+                coste=eva.trid(solucion);
+                break;
+            case "rotatedHH":
+                coste=eva.rotatedHH(solucion);
+                break;
+            case "rosenbrock":
+                coste=eva.rosenbrock(solucion);
+                break;
+            case "dixon":
+                coste=eva.dixon(solucion);
+                break;
+            case "rotatedHE":
+                coste=eva.rotatedHE(solucion);
+                break;
+            case "schewefel":
+                coste=eva.schewefel(solucion);
+                break;
+            case "michalewicz":
+                coste=eva.michalewicz(solucion,1);
+                break;
+            case "griewank":
+                coste=eva.griewank(solucion);
+                break;
+
+        }
+        return coste;
     }
 
 }

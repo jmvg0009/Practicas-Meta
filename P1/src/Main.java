@@ -6,7 +6,7 @@ public class Main {
         int rango_superior= config.getRango_superior();
         BusquedaLocal bl=new BusquedaLocal(77367663);
 
-        bl.busquedalocal(1000, 0.3,0.1f,-1,10,-33,33,"rotatedHH");
+        bl.busquedalocal(1000, 0.3,0.1f,-1,10,-33,33,"ackley");
 
 
     }

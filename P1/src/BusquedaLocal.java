@@ -35,11 +35,7 @@ public class BusquedaLocal {
             }
             int nuevomej;
             nuevomej=nuevoMejor(vecinos,mejorSolucion,mejorCoste,k,funcion);
-           // mejorSolucion=nuevoMejor(vecinos,mejorSolucion,mejorCoste,k,mejora);
-//            double compruebaMejora=eva.ackley(mejorSolucion);
-//            if(compruebaMejora==mejorCoste){
-//                mejora=false;
-//            }
+
             if(nuevomej==-1){
                 mejora=false;
             }else {
